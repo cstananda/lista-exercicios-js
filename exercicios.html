@@ -1,0 +1,140 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>js</title>
+</head>
+<body>  
+    <div class="box">
+        <h3>dom em tempo real</h3>
+        <input type="text" id="meuInput" placeholder="">
+        <p>Texto: <strong id="textoExibido">aguardando...</strong></p>
+    </div>
+    <div class="box">
+        <h3>contador</h3>
+        <button onclick="alterarContador(-1)">-</button>
+        <span id="valorContador">0</span>
+        <button onclick="alterarContador(1)">+</button>
+        <button onclick="alterarContador(0)" style="background:#6c757d;">Zerar</button>
+    </div>
+
+    <div class="box">
+        <h3>Resultados dos Exercícios</h3>
+        <ul id="listaResultados"></ul>
+    </div>
+    <script>
+        const listaUI = document.getElementById('listaResultados');
+
+        function imprimir(label, valor) {
+            const item = document.createElement('li');
+            item.innerHTML = `<strong>${label}</strong> ${valor}`;
+            listaUI.appendChild(item);
+        }
+        // nome
+        const nome = prompt(" Qual o seu nome?");
+        alert("Olá, " + nome);
+        imprimir("1. Nome:", nome);
+
+        // operações
+        const n1 = Number(prompt(" Digite o primeiro número:"));
+        const n2 = Number(prompt(" Digite o segundo número:"));
+        imprimir("2. Operações:", `Soma: ${n1+n2} | Sub: ${n1-n2} | Mult: ${n1*n2} | Div: ${n1/n2}`);
+
+        // par ou impar
+        const numParImpar = Number(prompt(" Digite um número (Par/Ímpar):"));
+        imprimir("3. Par ou Ímpar:", `${numParImpar} é ${numParImpar % 2 === 0 ? 'Par' : 'Ímpar'}`);
+
+        // maior e menor
+        const v1 = Number(prompt(" Num 1:"));
+        const v2 = Number(prompt(" Num 2:"));
+        const v3 = Number(prompt(" Num 3:"));
+        imprimir("4. Maior/Menor:", `Maior: ${Math.max(v1, v2, v3)}, Menor: ${Math.min(v1, v2, v3)}`);
+
+        //media
+        const nota1 = Number(prompt(" Nota 1:"));
+        const nota2 = Number(prompt(" Nota 2:"));
+        const nota3 = Number(prompt(" Nota 3:"));
+        const media = (nota1 + nota2 + nota3) / 3;
+        imprimir("5. Média:", `${media.toFixed(1)} - ${media >= 7 ? 'Aprovado' : 'Reprovado'}`);
+
+        // tabuada
+        const t = Number(prompt("Tabuada de qual número?"));
+        let tabuadaStr = "";
+        for(let i=1; i<=10; i++) tabuadaStr += `${t}x${i}=${t*i} ${i<10 ? '| ' : ''}`;
+        imprimir(`6. Tabuada do ${t}:`, tabuadaStr);
+
+        // fatorial
+        const fatNum = Number(prompt("Fatorial de:"));
+        let fat = 1;
+        for(let i = fatNum; i > 1; i--) fat *= i;
+        imprimir(`7. Fatorial de ${fatNum}:`, fat);
+
+        // nunmero primo
+        const primoNum = Number(prompt("8. Verifique se é primo:"));
+        let ePrimo = primoNum > 1;
+        for(let i=2; i <= Math.sqrt(primoNum); i++) {
+            if(primoNum % i === 0) { ePrimo = false; break; }
+        }
+        imprimir(`8. É primo?`, `${primoNum}: ${ePrimo ? 'Sim' : 'Não'}`);
+
+        // conversão
+        const cIn = Number(prompt("9a. Celsius para Fahrenheit:"));
+        const fOut = (cIn * 1.8 + 32).toFixed(1);
+        const fIn = Number(prompt("9b. Fahrenheit para Celsius:"));
+        const cOut = ((fIn - 32) / 1.8).toFixed(1);
+        imprimir("9. Conversão:", `${cIn}°C = ${fOut}°F | ${fIn}°F = ${cOut}°C`);
+
+
+        const lista = [10, 25, 40, 10, 5, 25, 80];
+        imprimir("---", "Início dos exercícios de Array");
+
+        // soma array
+        const somaArr = lista.reduce((a, b) => a + b, 0);
+        imprimir("10. Soma do Array:", somaArr);
+
+        // array
+        const resStats = `Maior: ${Math.max(...lista)}, Menor: ${Math.min(...lista)}, Média: ${(somaArr/lista.length).toFixed(2)}`;
+        imprimir("11. Stats:", resStats);
+
+        // sem duplicadoos
+        const unicos = [...new Set(lista)];
+        imprimir("12. Únicos:", unicos.join(", "));
+
+        //  ordenar
+        const pessoas = [{n:"fernanda", id:30}, {n:"samia", id:20}, {n:"mariana", id:25}];
+        pessoas.sort((a, b) => a.id - b.id);
+        imprimir("13. Ordenados por idade:", JSON.stringify(pessoas));
+
+        // desconto
+        const descontos = lista.map(p => (p * 0.9).toFixed(1));
+        imprimir("14. Com 10% OFF:", descontos.join(", "));
+
+        // indice
+        const idx = 2;
+        imprimir(`15. Valor no índice ${idx}:`, lista[idx]);
+
+        // contar palavras
+        const frase = "Estudo no IFSul campus Livramento";
+        const contagem = frase.trim().split(/\s+/).length;
+        imprimir(`16. Palavras em "${frase}":`, contagem);
+
+
+        // input
+        const inputElem = document.getElementById('meuInput');
+        const displayElem = document.getElementById('textoExibido');
+        inputElem.addEventListener('input', () => {
+            displayElem.textContent = inputElem.value || "Aguardando...";
+        });
+
+        // contador
+        let contador = 0;
+        const displayContador = document.getElementById('valorContador');
+        function alterarContador(valor) {
+            if (valor === 0) contador = 0;
+            else contador += valor;
+            displayContador.textContent = contador;
+            displayContador.style.color = contador > 0 ? "green" : (contador < 0 ? "red" : "black");
+        }
+    </script>
+</body>
+</html>
